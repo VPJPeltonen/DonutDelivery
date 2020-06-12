@@ -5,16 +5,19 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     public float speed;
+    private float zRotation;
+    private float stabilisingSpeed = 0.01f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        zRotation =  transform.eulerAngles.z;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         move();
+
     }
 
     private void move(){
@@ -24,7 +27,8 @@ public class ShipController : MonoBehaviour
         Rigidbody body = gameObject.GetComponent<Rigidbody>();
         body.AddForce (yDir * speed  * transform.forward);
         body.AddForce (xDir * (speed/2)  * transform.right);
-
+        Quaternion stableRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, zRotation);
+        transform.rotation = Quaternion.Lerp(transform.rotation, stableRotation, Time.time * stabilisingSpeed);
         /*
         Vector3 movement = transform.right * xDir + transform.forward * yDir;
         if (dashInput && dashStorage > 0f){

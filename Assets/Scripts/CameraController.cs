@@ -16,7 +16,6 @@ public class CameraController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition.position, Time.time * cameraSpeed);
         transform.LookAt(target);
         transform.rotation = ship.rotation;
-        //transform.rotation = stableRotation;
     }
 
 }

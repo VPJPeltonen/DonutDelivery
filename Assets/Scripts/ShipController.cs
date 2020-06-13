@@ -7,44 +7,41 @@ public class ShipController : MonoBehaviour
     public float speed;
     private float zRotation;
     private float stabilisingSpeed = 0.01f;
-    // Start is called before the first frame update
+    private Rigidbody body;
+    private UIScript UI;
+    private int health = 6;
     void Start()
     {
-        zRotation =  transform.eulerAngles.z;
+        zRotation =  0f;
+        body = gameObject.GetComponent<Rigidbody>();
+        UI = GameObject.FindWithTag("UI").GetComponent<UIScript>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         move();
+    }
 
+    public void Damage(int damage){
+        health -= damage;
+        UI.UpdateHealth(health);
     }
 
     private void move(){
         float xDir = Input.GetAxis("Horizontal");
         float yDir = Input.GetAxis("Vertical");
 
-        Rigidbody body = gameObject.GetComponent<Rigidbody>();
+         
+        if(Input.GetButton("Up")){
+            body.AddForce ((speed/2)  * transform.up);
+        }
+        if(Input.GetButton("Down")){
+            body.AddForce ((speed/2)  * -transform.up);
+        }
+
         body.AddForce (yDir * speed  * transform.forward);
         body.AddForce (xDir * (speed/2)  * transform.right);
         Quaternion stableRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, zRotation);
         transform.rotation = Quaternion.Lerp(transform.rotation, stableRotation, Time.time * stabilisingSpeed);
-        /*
-        Vector3 movement = transform.right * xDir + transform.forward * yDir;
-        if (dashInput && dashStorage > 0f){
-            controller.Move(movement * moveSpeed * dashPower * Time.deltaTime);
-            dashStorage -= 20f * Time.deltaTime;
-        }else{
-            controller.Move(movement * moveSpeed * Time.deltaTime);
-            if (dashStorage < 100){
-                dashStorage += dashRegeneration * Time.deltaTime;
-            }
-        }
-        bool onGround = checkHeight();
-        if(onGround && xDir > 0 || yDir > 0 && onGround){
-            if(!audioSource.isPlaying){
-                audioSource.PlayOneShot(walk[Random.Range(0,walk.Length-1)],0.4f);
-            }
-        }*/
     }
 }

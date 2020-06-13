@@ -15,19 +15,19 @@ public class BalloonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(playerbody);
+        //transform.LookAt(playerbody);
     }
 
     private void Shoot(){
         var bullet = Instantiate(Bullet, transform.position, transform.rotation);
-        bullet.GetComponent<Rigidbody>().AddForce(100f  * transform.forward);
+        Vector3 dir = playerbody.position - transform.position; 
+        dir.Normalize();
+        bullet.GetComponent<Rigidbody>().AddForce(100f  * dir);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("playerdetected");
         if(other.tag == "Player"){
-            Debug.Log("shoot");
             Shoot();
         }
     }

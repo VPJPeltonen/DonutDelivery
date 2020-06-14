@@ -8,7 +8,7 @@ public class BulletScript : MonoBehaviour
     private float counter;
     void Update(){
         counter += Time.deltaTime;
-        if(counter >= 5f){
+        if(counter >= 10f){
             Destroy(gameObject);
         }
     }

@@ -7,6 +7,8 @@ public class ShipController : MonoBehaviour
     public float speed;
     public GameObject Donuts;
     public AudioClip explosion;
+    public GameControllerScript GM;
+    public mouseLook mouse;
     public bool hasDonuts;
     private float zRotation;
     private float stabilisingSpeed = 0.01f;
@@ -43,11 +45,17 @@ public class ShipController : MonoBehaviour
         health -= damage;
         UI.UpdateHealth(health);
         ASource.PlayOneShot(explosion, 0.7f);
+        if(health <= 0){
+            GM.GameOver();
+            state = "dead";
+            mouse.GameOver();
+        }
     }
 
     public void TargetTriggered(bool isSource){
         Donuts.SetActive(isSource);
         hasDonuts = isSource;
+        GM.IndicatorActivated(isSource,transform.position);
     }
 
     private void move(){

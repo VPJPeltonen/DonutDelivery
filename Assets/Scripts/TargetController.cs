@@ -12,12 +12,15 @@ public class TargetController : MonoBehaviour
     private string state;
     private Vector3 scaleChange, originalScale;
     private bool activeTarget = false;
-    
+    private bool active = true;
     void Start()
     {
         originalScale = transform.localScale;
         rend = GetComponent<Renderer>();
         scaleChange = new Vector3(0.05f, 0.05f, 0.05f);
+        if(!source){
+            Disable();
+        }
     }
 
     private void Update(){
@@ -28,8 +31,7 @@ public class TargetController : MonoBehaviour
                 transform.localScale += scaleChange; 
                 if (count >= 0.5f){
                     if(!source){
-                        rend.enabled = false;
-                        mapRend.enabled = false;
+                        Disable();
                     }
                     gameObject.GetComponent<MeshRenderer>().material = basicMat;
                     transform.localScale = originalScale;
@@ -40,8 +42,21 @@ public class TargetController : MonoBehaviour
         }
     }
 
+    public void Disable(){
+        rend.enabled = false;
+        mapRend.enabled = false;
+        active = false;
+    }
+
+    public void ActivateTarget(){
+        rend.enabled = true;
+        mapRend.enabled = true;
+        active = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        if(!active){ return;}
         if(other.tag == "Player"){
             ShipController ship = other.GetComponent<ShipController>();
             if(ship.hasDonuts && source){

@@ -13,6 +13,7 @@ public class UIScript : MonoBehaviour
     }
 
     public void UpdateHealth(int health){
+        if(health < 0){return;}
         HealthHearts[health].SetActive(false);
     }
 }

@@ -25,6 +25,11 @@ public class mouseLook : MonoBehaviour
 
     }
 
+    public void GameOver(){
+        state = "dead";
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void StartGame(){
         Cursor.lockState = CursorLockMode.Locked;
         state = "normal";

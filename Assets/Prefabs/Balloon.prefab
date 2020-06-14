@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2397584085652534350}
   m_Layer: 0
   m_Name: Balloon
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 6560312165431395045, guid: 5f7fc530ce162ef44a35ad0472bb3c33, type: 3}
+  active: 1
+  range: {fileID: 2397584085652534350}
 --- !u!135 &2397584085652534350
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -58,7 +60,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 8
+  m_Radius: 16
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5203602288400284302
 GameObject:

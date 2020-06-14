@@ -5,6 +5,14 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public GameObject Explosion;
+    private float counter;
+    void Update(){
+        counter += Time.deltaTime;
+        if(counter >= 5f){
+            Destroy(gameObject);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player"){

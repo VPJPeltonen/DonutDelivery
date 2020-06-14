@@ -8,15 +8,26 @@ public class mouseLook : MonoBehaviour
     public Transform playerBody;
     public float turnSpeed = 2f; 
     private float xRot = 0f;
-
+    private string state;
     void Start(){
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
-    void FixedUpdate(){
 
-        float mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
-        transform.Rotate(Vector3.up * mouseX * turnSpeed);
-        transform.Rotate(Vector3.right * mouseY * turnSpeed);
+    void FixedUpdate(){
+        switch(state){
+            case "normal":
+                float mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
+                float mouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
+                transform.Rotate(Vector3.up * mouseX * turnSpeed);
+                transform.Rotate(Vector3.right * mouseY * turnSpeed);
+                break;
+        }
+
     }
+
+    public void StartGame(){
+        Cursor.lockState = CursorLockMode.Locked;
+        state = "normal";
+    }
+
 }

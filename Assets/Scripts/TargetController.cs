@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TargetController : MonoBehaviour
 {
-    public Material greenMat, yellowMat;
+    public Material basicMat, activatingMat;
+    public bool source = false;
     public Renderer mapRend;
     private Renderer rend;
     private float count;
     private string state;
     private Vector3 scaleChange, originalScale;
-    private bool source = false;
     private bool activeTarget = false;
     
     void Start()
@@ -24,10 +24,16 @@ public class TargetController : MonoBehaviour
         switch(state){
             case "Activating":
                 count += Time.deltaTime;
+                scaleChange = new Vector3(count, count, count);
                 transform.localScale += scaleChange; 
                 if (count >= 0.5f){
-                    rend.enabled = false;
-                    mapRend.enabled = false;
+                    if(!source){
+                        rend.enabled = false;
+                        mapRend.enabled = false;
+                    }
+                    gameObject.GetComponent<MeshRenderer>().material = basicMat;
+                    transform.localScale = originalScale;
+                    count = 0f;
                     state = "None";
                 }
                 break;
@@ -37,10 +43,16 @@ public class TargetController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player"){
-            state = "Activating";
-            other.GetComponent<ShipController>().TargetTriggered(source);
-            gameObject.GetComponent<MeshRenderer> ().material = yellowMat;
-            gameObject.GetComponent<AudioSource>().Play();
+            ShipController ship = other.GetComponent<ShipController>();
+            if(ship.hasDonuts && source){
+                return;
+            }
+            if(ship.hasDonuts && !source || !ship.hasDonuts && source){
+                state = "Activating";
+                ship.TargetTriggered(source);
+                gameObject.GetComponent<MeshRenderer> ().material = activatingMat;
+                gameObject.GetComponent<AudioSource>().Play();
+            }
         }
     }
 }

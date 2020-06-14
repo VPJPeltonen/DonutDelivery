@@ -187,8 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750d9faa2f2f9ce4c8deb12cea83142e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greenMat: {fileID: 2100000, guid: cb13b112b47cf3e4e8b312320ff6d5ba, type: 2}
-  yellowMat: {fileID: 2100000, guid: 72f04c4c7be0ac0429932c625b0d5d85, type: 2}
+  basicMat: {fileID: 2100000, guid: cb13b112b47cf3e4e8b312320ff6d5ba, type: 2}
+  activatingMat: {fileID: 2100000, guid: 72f04c4c7be0ac0429932c625b0d5d85, type: 2}
+  source: 0
   mapRend: {fileID: 2954628555307135543}
 --- !u!82 &6194247137261699805
 AudioSource:

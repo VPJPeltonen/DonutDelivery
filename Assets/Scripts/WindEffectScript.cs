@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class WindEffectScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private float counter;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Update(){
+        counter += Time.deltaTime;
+        if(counter >= 5f){
+            Destroy(gameObject);
+        }
     }
 }
